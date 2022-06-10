@@ -1,0 +1,112 @@
+## Cluster common name
+## Defaults to release name truncated to 63 characters (with hyphens removed)
+# commonName: aerocluster
+
+## Aerospike cluster size
+replicas: 3
+
+## Aerospike server docker image
+image:
+  repository: aerospike/aerospike-server-enterprise
+  tag: 5.7.0.8
+
+## In case the above image is pulled from a registry that requires
+## authentication, a secret containining credentials can be added
+## imagePullSecrets:
+##   - secret_with_credentials_to_custom_registry
+imagePullSecrets: {}
+
+## Aerospike access control configuration
+aerospikeAccessControl: {}
+  # users:
+  #   - name: admin
+  #     secretName: auth-secret
+  #     roles:
+  #       - sys-admin
+  #       - user-admin
+  # adminPolicy:
+  #   # timeout in milliseconds
+  #   timeout: 1000
+  # roles:
+  #   - name:
+  #     privileges: []
+  #     whitelist: []
+
+## Aerospike Configuration
+aerospikeConfig:
+  # service:
+  #   feature-key-file: /etc/aerospike/secrets/features.conf
+
+  # security:
+  #   enable-security: false
+
+  # network:
+  #   service:
+  #     port: 3000
+  #   fabric:
+  #     port: 3001
+  #   heartbeat:
+  #     port: 3002
+
+  # namespaces:
+  #   - name: test
+  #     memory-size: 1073741824 # 1GiB
+  #     replication-factor: 2
+  #     storage-engine:
+  #       type: memory
+
+
+## Aerospike secrets
+## To add feature key file, tls certificates etc.
+## We may be able to add feature key file, certificates and other secrets dynamically during helm install
+## when,
+## 1. operator supports adding multiple secret sources, or
+## 2. https://github.com/helm/helm/pull/8841 feature is added.
+
+# aerospikeSecretName: aerospike-secrets
+# aerospikeSecretMountPath: /etc/aerospike/secrets/
+
+## Network policy
+aerospikeNetworkPolicy: {}
+  # access: pod
+  # alternateAccess: hostExternal
+  # tlsAccess: pod
+  # tlsAlternateAccess: hostExternal
+
+## Pod spec
+podSpec: {}
+  # Multi pod per host
+  # multiPodPerHost: true
+  # sidecars:
+  #   - name: aerospike-prometheus-exporter
+  #     image: "aerospike/aerospike-prometheus-exporter:1.1.6"
+  #     ports:
+  #     - containerPort: 9145
+  #       name: exporter
+
+## Rack configuration
+rackConfig: {}
+
+## Storage configuration
+storage: {}
+  # volumes:
+  # - name: aerospike-config-secret
+  #   source:
+  #     secret:
+  #       secretName: aerospike-license
+  #   aerospike:
+  #     path: /etc/aerospike/secrets
+
+## Validation policy
+validationPolicy: {}
+  # skipWorkDirValidate: true
+  # skipXdrDlogFileValidate: true
+
+## seedsFinderServices defines service (e.g. loadbalancer) to connect to Aerospike
+seedsFinderServices: {}
+
+## operatorClientCert defines certificates to connect to Aerospike
+operatorClientCert: {}
+
+## Dev Mode
+devMode: false

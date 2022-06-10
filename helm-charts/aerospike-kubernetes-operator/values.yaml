@@ -1,0 +1,110 @@
+## Number of operator replicas
+replicas: 2
+
+## Operator image
+operatorImage:
+  repository: aerospike/aerospike-kubernetes-operator
+  tag: 2.0.0
+  # pullPolicy: IfNotPresent
+
+## In case the above image is pulled from a registry that requires
+## authentication, a secret containining credentials can be added
+## imagePullSecrets:
+##   - secret_with_credentials_to_custom_registry
+imagePullSecrets: {}
+
+## Create RBAC resources
+rbac:
+  create: true
+  # serviceAccountName: "default"
+
+## Ports
+# healthPort: 8081
+# metricsPort: 8080
+# webhookServicePort: 9443
+# kubeRBACProxyPort: 8443
+
+## Create certificates
+certs:
+  create: true
+  webhookServerCertSecretName: "webhook-server-cert"
+
+##  Operator configurations
+watchNamespaces: "default"
+
+## Resources - limits / requests
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 64Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 64Mi
+
+## Affinity rules
+affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: kubernetes.io/hostname
+  #         operator: In
+  #         values:
+  #         - <Kubernetes Host>
+
+## Extra environment variables that will be passed into the operator pods
+extraEnv: {}
+
+## Node selector
+nodeSelector: {}
+
+## Tolerations
+tolerations: []
+
+## Deployment annotations and labels
+## Deployment labels are inherited by the pods automatically
+annotations: {}
+labels: {}
+
+## Pod annotations and labels
+podAnnotations: {}
+podLabels: {}
+
+## Service configuration
+metricsService: {}
+  # labels: {}
+  # annotations: {}
+  # port: 8443
+  # type: ClusterIP
+
+webhookService: {}
+  # labels: {}
+  # annotations: {}
+  # port: 443
+  # type: ClusterIP
+
+## Pod security context
+podSecurityContext: {}
+
+## Container security context
+securityContext: {}
+
+livenessProbe: {}
+  # initialDelaySeconds: 15
+  # periodSeconds: 20
+  # timeoutSeconds: 1
+  # successThreshold: 1
+  # failureThreshold: 3
+readinessProbe: {}
+  # initialDelaySeconds: 5
+  # periodSeconds: 10
+  # timeoutSeconds: 1
+  # successThreshold: 1
+  # failureThreshold: 3
+
+# Kube RBAC Proxy sidecar
+kubeRBACProxy:
+  image:
+    repository: gcr.io/kubebuilder/kube-rbac-proxy
+    tag: v0.5.0
+    # pullPolicy: IfNotPresent
